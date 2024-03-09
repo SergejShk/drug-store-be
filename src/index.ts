@@ -4,6 +4,9 @@ import { migrate } from "drizzle-orm/node-postgres/migrator";
 import dotenv from "dotenv";
 
 import App from "./app";
+import { ShopsController } from "./controllers/ShopsController";
+import { ShopsService } from "./services/ShopsService";
+import { ShopsDb } from "./database/shopsDb";
 
 dotenv.config();
 
@@ -25,12 +28,15 @@ const serverStart = async () => {
 		await migrate(db, { migrationsFolder: "./migrations" });
 
 		// dbs
+		const shopsDb = new ShopsDb(db);
 
 		// services
+		const shopsService = new ShopsService(shopsDb);
 
 		//controllers
+		const shopsController = new ShopsController(shopsService);
 
-		const app = new App(PORT, []);
+		const app = new App(PORT, [shopsController]);
 
 		app.listen();
 	} catch (error: any) {
