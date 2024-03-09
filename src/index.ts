@@ -7,6 +7,9 @@ import App from "./app";
 import { ShopsController } from "./controllers/ShopsController";
 import { ShopsService } from "./services/ShopsService";
 import { ShopsDb } from "./database/shopsDb";
+import { ProductsDb } from "./database/productsDb";
+import { ProductsService } from "./services/ProductsService";
+import { ProductsController } from "./controllers/ProductsController";
 
 dotenv.config();
 
@@ -29,14 +32,17 @@ const serverStart = async () => {
 
 		// dbs
 		const shopsDb = new ShopsDb(db);
+		const productsDb = new ProductsDb(db);
 
 		// services
 		const shopsService = new ShopsService(shopsDb);
+		const productsService = new ProductsService(productsDb);
 
 		//controllers
 		const shopsController = new ShopsController(shopsService);
+		const productsController = new ProductsController(productsService);
 
-		const app = new App(PORT, [shopsController]);
+		const app = new App(PORT, [shopsController, productsController]);
 
 		app.listen();
 	} catch (error: any) {

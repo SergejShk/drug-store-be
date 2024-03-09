@@ -8,6 +8,13 @@
       "when": 1710008987482,
       "tag": "0000_premium_cobalt_man",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1710012282774,
+      "tag": "0001_yummy_mole_man",
+      "breakpoints": true
     }
   ]
 }
