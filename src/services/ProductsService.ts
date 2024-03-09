@@ -11,4 +11,8 @@ export class ProductsService {
 	create = (newProduct: NewProduct) => {
 		return this.productsDb.createProduct(newProduct);
 	};
+
+	productsByShopId = (shopId: number) => {
+		return this.productsDb.getProductsByShop(shopId);
+	};
 }
