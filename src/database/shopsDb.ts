@@ -11,4 +11,6 @@ export class ShopsDb {
 			.values(newShop)
 			.returning()
 			.then((res) => res[0]);
+
+	public getShops = async () => this.db.select().from(shops);
 }

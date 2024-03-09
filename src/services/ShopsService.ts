@@ -11,4 +11,8 @@ export class ShopsService {
 	create = (newShop: NewShop) => {
 		return this.shopsDb.createShop(newShop);
 	};
+
+	getShops = () => {
+		return this.shopsDb.getShops();
+	};
 }

@@ -24,6 +24,7 @@ export class ShopsController extends Controller {
 
 	private initializeRoutes() {
 		this.router.post("/", this.link({ route: this.createShop }));
+		this.router.get("/", this.link({ route: this.getShops }));
 	}
 
 	private createShop: RequestHandler<{}, BaseResponse<Shop>> = async (req, res, next) => {
@@ -34,6 +35,15 @@ export class ShopsController extends Controller {
 			}
 
 			const result = await this.shopsService.create(validatedBody.data);
+			return res.status(200).json(okResponse(result));
+		} catch (e) {
+			next(e);
+		}
+	};
+
+	private getShops: RequestHandler<{}, BaseResponse<Shop[]>> = async (req, res, next) => {
+		try {
+			const result = await this.shopsService.getShops();
 			return res.status(200).json(okResponse(result));
 		} catch (e) {
 			next(e);
