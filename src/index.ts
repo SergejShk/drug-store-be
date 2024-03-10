@@ -4,12 +4,18 @@ import { migrate } from "drizzle-orm/node-postgres/migrator";
 import dotenv from "dotenv";
 
 import App from "./app";
-import { ShopsController } from "./controllers/ShopsController";
-import { ShopsService } from "./services/ShopsService";
+
+import { OrdersDb } from "./database/ordersDb";
 import { ShopsDb } from "./database/shopsDb";
 import { ProductsDb } from "./database/productsDb";
+
 import { ProductsService } from "./services/ProductsService";
+import { ShopsService } from "./services/ShopsService";
+import { OrdersService } from "./services/OrdersService";
+
 import { ProductsController } from "./controllers/ProductsController";
+import { OrdersController } from "./controllers/OrdersController";
+import { ShopsController } from "./controllers/ShopsController";
 
 dotenv.config();
 
@@ -33,16 +39,19 @@ const serverStart = async () => {
 		// dbs
 		const shopsDb = new ShopsDb(db);
 		const productsDb = new ProductsDb(db);
+		const ordersDb = new OrdersDb(db);
 
 		// services
 		const shopsService = new ShopsService(shopsDb);
 		const productsService = new ProductsService(productsDb);
+		const ordersService = new OrdersService(ordersDb);
 
 		//controllers
 		const shopsController = new ShopsController(shopsService);
 		const productsController = new ProductsController(productsService);
+		const ordersController = new OrdersController(ordersService);
 
-		const app = new App(PORT, [shopsController, productsController]);
+		const app = new App(PORT, [shopsController, productsController, ordersController]);
 
 		app.listen();
 	} catch (error: any) {
